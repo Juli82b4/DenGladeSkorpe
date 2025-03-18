@@ -14,7 +14,7 @@ function App() {
     { path: "/kurv", element: <Kurv /> },
   ]);
 
-  return routes; 
+  return routes;
 }
 
 export default App;

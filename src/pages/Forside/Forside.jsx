@@ -6,7 +6,6 @@ const Forside = () => {
   return (
     <>
       <Hero />
-      
     </>
   );
 };

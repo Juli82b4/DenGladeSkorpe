@@ -3,17 +3,17 @@
   height: 50vh;
   background-position: center;
   background-repeat: no-repeat;
-  display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .heroText {
   color: white;
-  font-size: 10px;
-  text-align: center;
-  margin-bottom: 20 px;
+  height: 50%;
   font-family: "Just Another Hand", cursive;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .heroText h1 span {
