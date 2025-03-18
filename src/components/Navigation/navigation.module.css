@@ -1,0 +1,100 @@
+.navigation {
+    background-color: #1a202c; /* Dark background */
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  
+  .navContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .logo {
+    width: 50px; /* Adjust logo size */
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .rightIcons {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  /* Cart Container */
+  .cartContainer {
+    position: relative;
+  }
+  
+  .cartIcon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .cartCount {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+  }
+  
+  /* Burger Button */
+  .burgerButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+  }
+  
+  /* Menu List */
+  .navLinks {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 150px;
+    background: #2d3748;
+    padding: 10px;
+    list-style: none;
+    text-align: right;
+  }
+  
+  .navLinks.open {
+    display: block;
+  }
+  
+  .navLinks li {
+    margin: 10px 0;
+  }
+  
+  .navLinks a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  /* Responsive */
+  @media (min-width: 768px) {
+    .navLinks {
+      display: flex;
+      position: static;
+      background: none;
+      padding: 0;
+      gap: 15px;
+    }
+  }
+  
