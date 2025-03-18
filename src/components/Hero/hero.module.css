@@ -1,10 +1,9 @@
 .hero {
   background-image: url(../../assets/headerImg.png);
-  height: 50vh;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  align-items: center;
-  justify-content: center;
+  width: 100vw;
+  height: 50vh;
 }
 
 .heroText {
