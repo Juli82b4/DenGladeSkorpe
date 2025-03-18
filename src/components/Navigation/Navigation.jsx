@@ -40,7 +40,7 @@ const Navigation = () => {
         <li>
           <a href="./Kontakt">Kontakt</a>
         </li>
-        <li>                                                                                   
+        <li>
           <a href="./Kurv">Kurv</a>
         </li>
       </ul>
