@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./navigation.module.css";
 import Logo from "../Logo/Logo";
-import { FaShoppingBag } from "react-icons/fa";
+import Cart from "../Cart/Cart";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,6 +22,10 @@ const Navigation = () => {
       <Logo />
 
       <div className={styles.menuIcons}>
+        <div className={styles.cartContainer}>
+          <Cart />
+        </div>
+
         <div
           className={styles.burgerMenu}
           onClick={toggleMenu}
@@ -30,14 +34,6 @@ const Navigation = () => {
           <div className={`${styles.bar} ${isOpen ? styles.open : ""}`}></div>
           <div className={`${styles.bar} ${isOpen ? styles.open : ""}`}></div>
           <div className={`${styles.bar} ${isOpen ? styles.open : ""}`}></div>
-        </div>
-        <div className={styles.cartContainer}>
-          <a href="/checkout">
-            <FaShoppingBag className={styles.cartIcon} />
-            {cartCount > 0 && (
-              <span className={styles.cartCount}>{cartCount}</span>
-            )}
-          </a>
         </div>
       </div>
 
