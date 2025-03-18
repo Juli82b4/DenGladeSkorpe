@@ -1,7 +1,14 @@
 import React from "react";
+import Navigation from "../../components/Navigation/Navigation";
+import Hero from "../../components/Hero/Hero";
 
 const Forside = () => {
-  return <div>Forside</div>;
+  return (
+    <>
+      <Hero />
+      
+    </>
+  );
 };
 
 export default Forside;
