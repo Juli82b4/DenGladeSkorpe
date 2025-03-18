@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import styles from "./navigation.module.css";
-import pizzaLogo from "../assets/pizza-logo.png";
-import cartIcon from "../assets/cart-icon.png";
+import Logo from "../Logo/Logo";
+import cartIcon from "../Cart/Cart";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,7 +11,7 @@ const Navigation = () => {
   return (
     <nav className={styles.navigation}>
       <div className={styles.navContainer}>
-        <img src={pizzaLogo} alt="Logo" className={styles.logo} />
+        <img src={Logo} alt="Logo" className={styles.logo} />
 
         <div className={styles.rightIcons}>
           <div className={styles.cartContainer}>
@@ -32,13 +32,16 @@ const Navigation = () => {
 
       <ul className={`${styles.navLinks} ${isOpen ? styles.open : ""}`}>
         <li>
-          <a href="#">Home</a>
+          <a href="#">Forside</a>
         </li>
         <li>
-          <a href="#">Menu</a>
+          <a href="/personalt">Personalt</a>
         </li>
         <li>
-          <a href="#">Contact</a>
+          <a href="./Kontakt">Kontakt</a>
+        </li>
+        <li>                                                                                   
+          <a href="./Kurv">Kurv</a>
         </li>
       </ul>
     </nav>

@@ -1,8 +1,6 @@
-.logo {
-    margin-right: auto;
-  }
-  
-  .logo img {
-    height: 40px;
-  }
-  
+.logo img {
+  margin-right: auto;
+  height: 70px;
+  width: 70px;
+  object-fit: contain;
+}
