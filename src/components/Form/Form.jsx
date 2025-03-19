@@ -22,7 +22,7 @@ const Form = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
       <div className={styles.formGroup}>
-        <label htmlFor="name">Name:</label>
+        <label htmlFor="name">Navn</label>
         <input
           type="text"
           id="name"
@@ -33,7 +33,7 @@ const Form = () => {
         />
       </div>
       <div className={styles.formGroup}>
-        <label htmlFor="emne">Emne:</label>
+        <label htmlFor="emne">Emne</label>
         <input
           type="text"
           id="emne"
@@ -44,7 +44,7 @@ const Form = () => {
         />
       </div>
       <div className={styles.formGroup}>
-        <label htmlFor="beskrivelse">Beskrivelse:</label>
+        <label htmlFor="beskrivelse">Beskrivelse</label>
         <textarea
           id="beskrivelse"
           name="beskrivelse"
