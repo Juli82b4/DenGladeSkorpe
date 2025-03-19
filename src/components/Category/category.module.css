@@ -1,15 +1,18 @@
 .container {
-  padding: 1em;
   text-align: center;
+}
+
+.container h1 {
+  font-family: "Just Another Hand";
+  font-size: 40px;
 }
 
 .categories {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
-  margin: 0 auto;
+  background-color: #f6f0ee;
 }
-
 
 .categoryItem {
   background-size: cover;
@@ -17,4 +20,11 @@
   color: white;
   padding: 20px;
   border-radius: 8px;
+}
+
+.categoriesText {
+  text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black,
+    2px 2px 0 black;
+  font-size: 18px;
+  font-family: "Just Another Hand";
 }
