@@ -1,21 +1,16 @@
 .hero {
   background-image: url(../../assets/headerImg.png);
-  height: 50vh;
+  background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100vw;
+  height: 50vh;
 }
 
 .heroText {
   color: white;
-  font-size: 10px;
-  text-align: center;
-  margin-bottom: 20 px;
+  height: 50%;
   font-family: "Just Another Hand", cursive;
-}
-
-.heroText h1 span {
-  font-size: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

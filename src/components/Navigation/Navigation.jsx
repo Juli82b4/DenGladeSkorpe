@@ -1,47 +1,60 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import React, { useState, useEffect } from "react";
 import styles from "./navigation.module.css";
 import Logo from "../Logo/Logo";
-import cartIcon from "../Cart/Cart";
+import Cart from "../Cart/Cart";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const cartCount = 2;
+  const [cartCount, setCartCount] = useState(0);
+
+  useEffect(() => {
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalCount = storedCart.reduce((acc, item) => acc + item.count, 0);
+    setCartCount(totalCount);
+  }, []);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <nav className={styles.navigation}>
-      <div className={styles.navContainer}>
-        <img src={Logo} alt="Logo" className={styles.logo} />
+      <Logo />
 
-        <div className={styles.rightIcons}>
-          <div className={styles.cartContainer}>
-            <img src={cartIcon} alt="Cart" className={styles.cartIcon} />
-            {cartCount > 0 && (
-              <span className={styles.cartCount}>{cartCount}</span>
-            )}
-          </div>
+      <div className={styles.menuIcons}>
+        <div className={styles.cartContainer}>
+          <Cart />
+        </div>
 
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={styles.burgerButton}
-          >
-            {isOpen ? <X size={30} /> : <Menu size={30} />}
-          </button>
+        <div
+          className={styles.burgerMenu}
+          onClick={toggleMenu}
+          aria-expanded={isOpen}
+        >
+          <div className={`${styles.bar} ${isOpen ? styles.open : ""}`}></div>
+          <div className={`${styles.bar} ${isOpen ? styles.open : ""}`}></div>
+          <div className={`${styles.bar} ${isOpen ? styles.open : ""}`}></div>
         </div>
       </div>
 
       <ul className={`${styles.navLinks} ${isOpen ? styles.open : ""}`}>
         <li>
-          <a href="#">Forside</a>
+          <a href="/shop">Shop</a>
         </li>
         <li>
-          <a href="/personalt">Personalt</a>
+          <a href="/services">Services</a>
         </li>
         <li>
-          <a href="./Kontakt">Kontakt</a>
+          <a href="/about">Om</a>
         </li>
-        <li>                                                                                   
-          <a href="./Kurv">Kurv</a>
+        <li>
+          <a href="/contact">Kontakt</a>
+        </li>
+        <li>
+          <a href="/checkout">Checkout</a>
+        </li>
+        <li>
+          <a href="/login">Login</a>
         </li>
       </ul>
     </nav>

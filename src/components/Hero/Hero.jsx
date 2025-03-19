@@ -5,7 +5,6 @@ import Navigation from "../Navigation/Navigation";
 const Hero = () => {
   return (
     <div className={styles.hero}>
-      
       <Navigation />
       <div className={styles.heroText}>
         <h1>
