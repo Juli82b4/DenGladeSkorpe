@@ -1,0 +1,30 @@
+.takContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background-image: url(../../assets/headerImg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: cover;
+  background-color: #060606;
+}
+
+h1 {
+  font-family: "Kurale", serif;
+  font-size: 16px;
+  margin-bottom: 20px;
+  font-weight: 100;
+}
+
+p {
+  font-size: 16px;
+}
+
+.tak {
+  background-color: #dacbcbc9;
+  width: 100%;
+  padding: 20px;
+}

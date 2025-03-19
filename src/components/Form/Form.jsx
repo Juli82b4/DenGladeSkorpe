@@ -8,6 +8,8 @@ const Form = () => {
     beskrivelse: "",
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -15,8 +17,14 @@ const Form = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true); // Set loading state to true during submission
     console.log("Form submitted:", formData);
-    // Add your form submission logic here
+
+    // Simulate a network request or some action before redirect
+    setTimeout(() => {
+      // Redirect to "Tak" page after submission
+      window.location.href = "/tak";
+    }, 1000); // Delay to simulate processing
   };
 
   return (
@@ -30,7 +38,7 @@ const Form = () => {
           value={formData.name}
           onChange={handleChange}
           required
-        />
+        />                                           
       </div>
       <div className={styles.formGroup}>
         <label htmlFor="emne">Emne</label>
@@ -53,8 +61,8 @@ const Form = () => {
           required
         />
       </div>
-      <button type="submit" className={styles.submitButton}>
-        Send
+      <button type="submit" className={styles.submitButton} disabled={loading}>
+        {loading ? "Sending..." : "Send"}
       </button>
     </form>
   );
