@@ -13,7 +13,7 @@ const Category = () => {
       <h1>Categories</h1>
       <div className={styles.categories}>
         {categories.map((category) => (
-          <div key={category.id}>
+          <div key={category._id}>
             <div
               className={styles.categoryItem}
               style={{ backgroundImage: `url(${category.image})` }}
