@@ -39,22 +39,20 @@ const Navigation = () => {
 
       <ul className={`${styles.navLinks} ${isOpen ? styles.open : ""}`}>
         <li>
-          <a href="/shop">Shop</a>
+          <a href="/forside">Forside</a>
         </li>
         <li>
-          <a href="/services">Services</a>
+          <a href="/personalt">Personalet</a>
         </li>
         <li>
-          <a href="/about">Om</a>
+          <a href="/about">Kontakt</a>
+        </li>
+
+        <li>
+          <a href="/kurv">Kurv</a>
         </li>
         <li>
-          <a href="/contact">Kontakt</a>
-        </li>
-        <li>
-          <a href="/checkout">Checkout</a>
-        </li>
-        <li>
-          <a href="/login">Login</a>
+          <a href="/login">login</a>
         </li>
       </ul>
     </nav>

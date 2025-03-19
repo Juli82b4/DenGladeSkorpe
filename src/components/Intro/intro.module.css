@@ -1,4 +1,20 @@
 .container {
   padding: 1em;
-  text-align: center;
+  text-align: center; /* Centers text */
+}
+
+.title {
+  font-family: "Kurale", serif;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.container h1 {
+  font-family: "Just Another Hand", cursive;
+  font-size: 40px;
+  text-shadow: 
+  -2px -2px 0 white,  
+  2px -2px 0 white,  
+  -2px 2px 0 white,  
+  2px 2px 0 white;
 }
