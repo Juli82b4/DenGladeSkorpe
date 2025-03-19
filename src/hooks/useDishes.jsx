@@ -25,7 +25,21 @@ const useDishes = () => {
     fetchDishesFromServer();
   }, []);
 
-  return { dishes, isLoading, fetchError };
+  const getDishById = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3042/dish/${id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch dish");
+      }
+
+      const result = await response.json();
+      return result.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return { dishes, isLoading, fetchError, getDishById };
 };
 
 export default useDishes;

@@ -1,6 +1,10 @@
 .container {
   padding: 1em;
- 
+}
+
+.dishLink {
+  text-decoration: none;
+  color: white;
 }
 
 .categories {
