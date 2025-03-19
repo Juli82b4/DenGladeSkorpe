@@ -8,9 +8,10 @@
 
 .heroText {
   color: white;
-  height: 50%;
+  height: 63%;
   font-family: "Just Another Hand", cursive;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
