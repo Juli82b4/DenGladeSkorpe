@@ -12,7 +12,7 @@ const Forside = () => {
     <>
       <Hero />
       <Intro title="Velkommen til Den Glade Skorpe!" text={textContent} />
-      <Category />
+      <Category/>
       <Dishes />
       <Footer />
     </>

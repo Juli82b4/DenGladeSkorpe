@@ -12,14 +12,14 @@ const Category = () => {
     <div className={styles.container}>
       <h1>Vælg kategori</h1>
       <div className={styles.categories}>
-        {categories.map((category) => (
+        {categories.slice(0, 3).map((category) => (
           <div key={category._id}>
             <div
               className={styles.categoryItem}
               style={{ backgroundImage: `url(${category.image})` }}
-            > 
-              <div className= {styles.categoriesText}>
-              <h2>{category.name}</h2>
+            >
+              <div className={styles.categoriesText}>
+                <h2>{category.name}</h2>
               </div>
             </div>
           </div>
