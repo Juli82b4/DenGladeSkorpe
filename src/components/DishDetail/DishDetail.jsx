@@ -10,8 +10,8 @@ const DishDetail = () => {
   const { ingredients } = useIngredients();
   const [dish, setDish] = useState(null);
   const [selectedSize, setSelectedSize] = useState("Almindelig");
-  const [selectedIngredients, setSelectedIngredients] =
-    useState("TilføjIngredients");
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [showIngredients, setShowIngredients] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -19,6 +19,30 @@ const DishDetail = () => {
       .then(setDish)
       .catch((err) => setError(err.message));
   }, [id]);
+
+  const addToCart = () => {
+    const newItem = {
+      _id: dish._id,
+      title: dish.title,
+      image: dish.image,
+      price: selectedSize === "Almindelig" ? dish.price.normal : dish.price.family,
+      count: 1,
+      size: selectedSize,
+      ingredients: selectedIngredients,
+    };
+
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    storedCart.push(newItem);
+    localStorage.setItem("cart", JSON.stringify(storedCart));
+  };
+
+  const handleIngredientSelect = (ingredient) => {
+    setSelectedIngredients((prev) =>
+      prev.includes(ingredient)
+        ? prev.filter((item) => item !== ingredient)
+        : [...prev, ingredient]
+    );
+  };
 
   if (error) return <div className={styles.error}>Error: {error}</div>;
   if (!dish) return <div className={styles.loading}>Loading...</div>;
@@ -33,16 +57,33 @@ const DishDetail = () => {
           <p key={index}>{ingredient}</p>
         ))}
 
-        <div className={styles.sizeSelector}>
-          <select
-            value={selectedSize}
-            onChange={(e) => setSelectedSize(e.target.value)}
-          >
-            <option value="">Tilføj Ingredients</option>
-            {ingredients.map((ingredient, index) => (
-              <option value={index}>{ingredient}</option>
+        <div className={styles.ingredientSelector}>
+          <h2 onClick={() => setShowIngredients(!showIngredients)} className={styles.toggleButton}>
+            Tilføj ekstra ingredienser
+          </h2>
+          {showIngredients && (
+            <div className={styles.ingredientBox}>
+              {ingredients.map((ingredient, index) => (
+                <p
+                  key={index}
+                  className={
+                    selectedIngredients.includes(ingredient)
+                      ? styles.selectedIngredient
+                      : styles.ingredientItem
+                  }
+                  onClick={() => handleIngredientSelect(ingredient)}
+                >
+                  {ingredient}
+                </p>
+              ))}
+            </div>
+          )}
+          <div className={styles.selectedIngredientsList}>
+            {selectedIngredients.length > 0 && <h3>Valgte ingredienser:</h3>}
+            {selectedIngredients.map((ingredient, index) => (
+              <p key={index} className={styles.selectedIngredientItem}>{ingredient}</p>
             ))}
-          </select>
+          </div>
         </div>
       </div>
 
@@ -56,12 +97,12 @@ const DishDetail = () => {
           <option value="Family">Family</option>
         </select>
       </div>
+
       <p className={styles.price}>
-        Pris: <br />{" "}
-        {selectedSize === "Almindelig" ? dish.price.normal : dish.price.family}
-        ,-
+        Pris: {selectedSize === "Almindelig" ? dish.price.normal : dish.price.family},-
       </p>
-      <button className={styles.addToCartButton}>
+
+      <button onClick={addToCart} className={styles.addToCartButton}>
         Tilføj {dish.title} til kurven
       </button>
     </div>

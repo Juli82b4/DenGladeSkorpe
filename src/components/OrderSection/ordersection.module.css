@@ -1,0 +1,158 @@
+.orderSection {
+  padding: 30px;
+  margin: 20px;
+  background-color: #eff4f8;
+}
+.itemImageContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.itemQuantity {
+  margin-top: 14px;
+  font-weight: bold;
+  font-size: 18px;
+  display: inline-flex;
+}
+
+.itemImage {
+  max-width: 50px;
+  height: auto;
+}
+
+.itemTitle {
+  font-size: 14px;
+  color: #333;
+}
+
+.cartItem {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.cartItemHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between quantity, image, and title */
+}
+
+.cartItemDetails p{
+  display: block;
+  gap: 10px;
+  margin: 20px;
+  text-align: left;
+}
+
+.extraIngredients,
+.size,
+.totalPrice {
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin: 20px;
+}
+
+.extraIngredients p,
+.size p,
+.totalPrice p {
+  margin: 0;
+}
+
+.itemName {
+  font-weight: bold;
+}
+
+.itemPrice {
+  color: #888;
+}
+
+.itemControls {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.incrementButton,
+.decrementButton {
+  margin: 0 20px;
+  font-size: 20px;
+}
+
+.total {
+  font-size: 1.5em;
+  margin-top: 20px;
+  text-align: right;
+  font-size: 18px;
+}
+
+.totalBox {
+  margin-top: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  text-align: right;
+  font-size: 12px;
+}
+
+.checkoutSection {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+.emailInput {
+  padding: 10px;
+  margin-right: 10px;
+  width: calc(100% - 130px);
+}
+
+.checkoutButton {
+  padding: 10px 20px;
+}
+
+.itemControls button {
+  border-radius: 8em;
+}
+
+.total span {
+  color: green;
+  font-size: 18px;
+  margin: 8px;
+}
+
+.totalBox h2 {
+  color: black;
+}
+
+.totalBox span {
+  color: green;
+  font-size: 18px;
+  margin: 10px;
+}
+
+.checkoutSection input {
+  color: black;
+  font-size: 15px;
+  padding: 10px 4em;
+}
+
+.checkoutSection {
+  background-color: #eff4f8;
+  border: none;
+}
+
+.checkoutSection button {
+  padding: 10px 5em;
+  font-size: 15px;
+}
+
+.cartItemInfo {
+  text-align: center;
+}
