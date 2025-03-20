@@ -1,0 +1,76 @@
+.backofficePage {
+  padding: 2rem;
+}
+
+.dishImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+.dishTable { 
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.dishTable th,
+.dishTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.dishTable th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.editButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  opacity: 0.8;
+}
+
+.form input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.form button:hover {
+  opacity: 0.8;
+}
