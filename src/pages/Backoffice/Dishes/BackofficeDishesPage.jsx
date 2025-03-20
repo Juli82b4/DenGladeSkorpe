@@ -3,7 +3,8 @@ import useDishes from "../../../hooks/useDishes";
 import styles from "./../backoffice.module.css";
 
 const BackofficeDishesPage = () => {
-  const { dishes, isLoading, fetchError, addDish, updateDish } = useDishes();
+  const { dishes, isLoading, fetchError, addDish, updateDish, deleteDish } =
+    useDishes();
   const [newDish, setNewDish] = useState({
     title: "",
     category: "",
@@ -81,6 +82,17 @@ const BackofficeDishesPage = () => {
     });
   };
 
+  const handleDeleteDish = async (id) => {
+    if (window.confirm("Are you sure you want to delete this dish?")) {
+      try {
+        await deleteDish(id); // Call the deleteDish function from useDishes
+        alert("Dish deleted successfully!");
+      } catch (error) {
+        alert("Failed to delete dish: " + error.message);
+      }
+    }
+  };
+
   return (
     <div className={styles.backofficePage}>
       <h1>Backoffice Dishes</h1>
@@ -119,7 +131,12 @@ const BackofficeDishesPage = () => {
                     >
                       Edit
                     </button>
-                    <button className={styles.deleteButton}>Delete</button>
+                    <button
+                      className={styles.deleteButton}
+                      onClick={() => handleDeleteDish(dish._id)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -194,9 +211,7 @@ const BackofficeDishesPage = () => {
             <input
               type="hidden"
               value={editDish.id}
-              onChange={(e) =>
-                setEditDish({ ...editDish, id: e.target.value })
-              }
+              onChange={(e) => setEditDish({ ...editDish, id: e.target.value })}
               required
             />
             <input

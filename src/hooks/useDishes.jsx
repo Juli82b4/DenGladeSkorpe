@@ -127,7 +127,7 @@ const useDishes = () => {
       const response = await fetch(`http://localhost:3042/dish/${id}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${token}`, // Attach the token for authentication
+          Authorization: `Bearer ${token}`, // Attach token for authentication
         },
       });
 
@@ -135,7 +135,7 @@ const useDishes = () => {
         throw new Error("Failed to delete dish");
       }
 
-      // Remove the deleted dish from the state
+      // If the delete was successful, remove the dish from the state
       setDishes((prevDishes) => prevDishes.filter((dish) => dish._id !== id));
     } catch (error) {
       throw new Error(error.message);
