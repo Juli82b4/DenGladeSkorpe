@@ -53,11 +53,13 @@ const BackofficeOrdersPage = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
+              <tr key={order.id}>
+                <td>{order.id}</td>
                 <td>
                   {order.dishes.map((dish, index) => (
-                    <div key={index}>{dish.title} ({dish.count}x)</div>
+                    <div key={index}>
+                      {dish.dishTitle} ({dish.amount}x)
+                    </div>
                   ))}
                 </td>
                 <td>{order.comment || "No comments"}</td>

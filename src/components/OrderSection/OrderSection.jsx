@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import useOrders from "../../hooks/useOrders";
 import styles from "./ordersection.module.css";
 
 const OrderSection = () => {
   const [cart, setCart] = useState([]); // State to store the cart items
+  const [comment, setComment] = useState(""); // State for the comment input
+  const { submitOrder, fetchError } = useOrders(); // Destructure `submitOrder` from the hook
 
   // Load the cart data from localStorage when the component mounts
   useEffect(() => {
@@ -10,41 +13,23 @@ const OrderSection = () => {
     setCart(storedCart); // Set the cart state
   }, []);
 
-  // Update the cart state and save it to localStorage
-  const updateCart = (updatedCart) => {
-    setCart(updatedCart); // Update the state
-    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Save to localStorage
-  };
-
-  // Increment the item count in the cart
-  const incrementCount = (index) => {
-    const updatedCart = [...cart]; // Copy the current cart
-    updatedCart[index].count += 1; // Increase the count of the selected item
-    updateCart(updatedCart); // Update cart state and localStorage
-  };
-
-  // Decrement the item count in the cart, or remove the item if the count is zero
-  const decrementCount = (index) => {
-    const updatedCart = [...cart]; // Copy the current cart
-    updatedCart[index].count -= 1; // Decrease the count of the selected item
-
-    // If the count is below zero, remove the item from the cart
-    if (updatedCart[index].count <= 0) {
-      updatedCart.splice(index, 1); // Remove item from the cart
-    }
-
-    updateCart(updatedCart); // Update cart state and localStorage
-  };
-
-  // Function to remove an item completely from the cart
-  const removeItem = (index) => {
-    const updatedCart = [...cart];
-    updatedCart.splice(index, 1); // Remove the item at the given index
-    updateCart(updatedCart); // Update cart state and localStorage
-  };
-
   // Calculate the total price of all items in the cart
   const total = cart.reduce((acc, item) => acc + item.count * item.price, 0); // Sum of count * price for each item
+
+  // Function to handle the order submission
+  const handleOrderSubmit = async () => {
+    try {
+      // Ensure the comment is passed here when calling submitOrder
+      const result = await submitOrder(cart, comment, total);
+      alert("Order successfully submitted!");
+
+      // Optionally, clear the cart after submitting the order
+      localStorage.removeItem("cart");
+      setCart([]);
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
+  };
 
   return (
     <div className={styles.orderSection}>
@@ -53,7 +38,11 @@ const OrderSection = () => {
         <div key={index} className={styles.cartItem}>
           <div className={styles.cartItemHeader}>
             <span className={styles.itemQuantity}>{item.count} X</span>
-            <img src={item.image} className={styles.itemImage} alt={item.title} />
+            <img
+              src={item.image}
+              className={styles.itemImage}
+              alt={item.title}
+            />
             <p className={styles.title}>{item.title}</p>
           </div>
           <div className={styles.cartItemDetails}>
@@ -71,8 +60,11 @@ const OrderSection = () => {
             <div className={styles.totalPrice}>
               <p>Pris: {item.count * item.price},-</p>
             </div>
-            <button className={styles.deleteButton} onClick={() => removeItem(index)}>
-               X Slet
+            <button
+              className={styles.deleteButton}
+              onClick={() => removeItem(index)}
+            >
+              X Slet
             </button>
           </div>
         </div>
@@ -86,17 +78,25 @@ const OrderSection = () => {
         </h2>
       </div>
 
+      {/* Comment Section */}
+      <div className={styles.commentSection}>
+        <textarea
+          className={styles.commentInput}
+          placeholder="Skriv en kommentar til din ordre (valgfrit)"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)} // Update comment state on input change
+        />
+      </div>
+
       {/* Checkout section */}
       <div className={styles.checkoutSection}>
-        <input type="email" placeholder="Din email" className={styles.emailInput} />
-        <br />
-        <button
-          onClick={() => alert("Checkout button clicked!")}
-          className={styles.checkoutButton}
-        >
+        <button onClick={handleOrderSubmit} className={styles.checkoutButton}>
           Afgiv ordre
         </button>
       </div>
+
+      {/* Display any fetch error */}
+      {fetchError && <div className={styles.error}>{fetchError}</div>}
     </div>
   );
 };
