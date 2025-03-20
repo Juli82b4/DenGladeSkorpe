@@ -23,12 +23,10 @@ const BackofficeDishesPage = () => {
 
   const handleNewDishSubmit = async (e) => {
     e.preventDefault();
-
     try {
       await addDish(newDish); // Await the addDish call
-      alert("Dish added successfully!"); // Optional: Show a success message
+      alert("Dish added successfully!");
       setNewDish({
-        // Clear form after submission
         title: "",
         category: "",
         price: { normal: 0, family: 0 },
@@ -40,11 +38,47 @@ const BackofficeDishesPage = () => {
     }
   };
 
+  const handleEditDishSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateDish(editDish.id, editDish); // Await the updateDish call
+      alert("Dish updated successfully!");
+      setEditDish({
+        id: "",
+        title: "",
+        category: "",
+        price: { normal: 0, family: 0 },
+        ingredients: [],
+        file: "",
+      });
+    } catch (error) {
+      alert("Failed to update dish: " + error.message);
+    }
+  };
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setNewDish({ ...newDish, file: file });
     }
+  };
+
+  const handleEditImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setEditDish({ ...editDish, file: file });
+    }
+  };
+
+  const handleEditClick = (dish) => {
+    setEditDish({
+      id: dish._id,
+      title: dish.title,
+      category: dish.category,
+      price: dish.price,
+      ingredients: dish.ingredients,
+      file: dish.image, // Assuming image is stored in `image`
+    });
   };
 
   return (
@@ -79,7 +113,12 @@ const BackofficeDishesPage = () => {
                 <td>{dish.category}</td>
                 <td>
                   <div className={styles.actionButtons}>
-                    <button className={styles.editButton}>Edit</button>
+                    <button
+                      className={styles.editButton}
+                      onClick={() => handleEditClick(dish)}
+                    >
+                      Edit
+                    </button>
                     <button className={styles.deleteButton}>Delete</button>
                   </div>
                 </td>
@@ -89,6 +128,7 @@ const BackofficeDishesPage = () => {
         </table>
       </div>
 
+      {/* Form for adding a new dish */}
       <div
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}
       >
@@ -146,6 +186,76 @@ const BackofficeDishesPage = () => {
           />
           <button type="submit">Add Dish</button>
         </form>
+
+        {/* Form for editing an existing dish */}
+        {editDish.id && (
+          <form onSubmit={handleEditDishSubmit} className={styles.form}>
+            <h2>Edit Dish</h2>
+            <input
+              type="hidden"
+              value={editDish.id}
+              onChange={(e) =>
+                setEditDish({ ...editDish, id: e.target.value })
+              }
+              required
+            />
+            <input
+              type="text"
+              value={editDish.title}
+              onChange={(e) =>
+                setEditDish({ ...editDish, title: e.target.value })
+              }
+              required
+            />
+            <input
+              type="text"
+              value={editDish.category}
+              onChange={(e) =>
+                setEditDish({ ...editDish, category: e.target.value })
+              }
+              required
+            />
+            <input
+              type="number"
+              value={editDish.price.normal}
+              onChange={(e) =>
+                setEditDish({
+                  ...editDish,
+                  price: { ...editDish.price, normal: +e.target.value },
+                })
+              }
+              required
+            />
+            <input
+              type="number"
+              value={editDish.price.family}
+              onChange={(e) =>
+                setEditDish({
+                  ...editDish,
+                  price: { ...editDish.price, family: +e.target.value },
+                })
+              }
+              required
+            />
+            <input
+              type="text"
+              value={editDish.ingredients.join(", ")}
+              onChange={(e) =>
+                setEditDish({
+                  ...editDish,
+                  ingredients: e.target.value.split(","),
+                })
+              }
+              required
+            />
+            <input
+              type="file"
+              onChange={handleEditImageChange}
+              accept="image/*"
+            />
+            <button type="submit">Update Dish</button>
+          </form>
+        )}
       </div>
     </div>
   );

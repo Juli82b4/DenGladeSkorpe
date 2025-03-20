@@ -85,13 +85,29 @@ const useDishes = () => {
   // Update an existing dish
   const updateDish = async (id, updatedDish) => {
     try {
-      const response = await fetch(`http://localhost:3042/dish/${id}`, {
+      const formData = new FormData();
+
+      // Append all other fields to FormData
+      formData.append("title", updatedDish.title);
+      formData.append("category", updatedDish.category);
+      const priceString = JSON.stringify(updatedDish.price);
+      formData.append("price", priceString);
+      formData.append("ingredients", updatedDish.ingredients.join(","));
+
+      // Add the ID to FormData (optional, if needed for your server)
+      formData.append("id", updatedDish.id);
+
+      // Add the file if present
+      if (updatedDish.file) {
+        formData.append("file", updatedDish.file);
+      }
+
+      const response = await fetch(`http://localhost:3042/dish`, {
         method: "PUT",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`, // Attach token for authentication
         },
-        body: JSON.stringify(updatedDish),
+        body: formData,
       });
 
       if (!response.ok) {
