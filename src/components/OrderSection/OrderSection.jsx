@@ -44,14 +44,23 @@ const OrderSection = () => {
       {/* Loop through the cart items and display them */}
       {cart.map((item, index) => (
         <div key={index} className={styles.cartItem}>
-          <div className={styles.cartItemHeader}> {/* First line */}
+          <div className={styles.cartItemHeader}>
+            {" "}
+            {/* First line */}
             <span className={styles.itemQuantity}>{item.count} X</span>
             <img src={item.image} className={styles.itemImage} />
             <p className={styles.title}>{item.title}</p>
           </div>
-          <div className={styles.cartItemDetails}> {/* Second line */}
+          <div className={styles.cartItemDetails}>
+            {" "}
+            {/* Second line */}
             <div className={styles.extraIngredients}>
-              <p>Ekstra: {item.extraIngredients || "Ingen"}</p>
+              <p>
+                Ekstra{" "}
+                {": " +
+                  item.ingredients.map((ingredient) => ingredient).join(", ") ||
+                  "Ingen"}
+              </p>
             </div>
             <div className={styles.size}>
               <p>Størrelse: {item.size || "Standard"}</p>

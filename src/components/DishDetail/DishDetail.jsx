@@ -25,7 +25,8 @@ const DishDetail = () => {
       _id: dish._id,
       title: dish.title,
       image: dish.image,
-      price: selectedSize === "Almindelig" ? dish.price.normal : dish.price.family,
+      price:
+        selectedSize === "Almindelig" ? dish.price.normal : dish.price.family,
       count: 1,
       size: selectedSize,
       ingredients: selectedIngredients,
@@ -58,30 +59,38 @@ const DishDetail = () => {
         ))}
 
         <div className={styles.ingredientSelector}>
-          <h2 onClick={() => setShowIngredients(!showIngredients)} className={styles.toggleButton}>
-            Tilføj ekstra ingredienser
-          </h2>
+          <button
+            onClick={() => setShowIngredients(!showIngredients)}
+            className={styles.ingredientToggle}
+          >
+            {showIngredients ? "Skjul ingredienser" : "Vælg ingredienser"}
+          </button>
           {showIngredients && (
             <div className={styles.ingredientBox}>
-              {ingredients.map((ingredient, index) => (
-                <p
-                  key={index}
-                  className={
-                    selectedIngredients.includes(ingredient)
-                      ? styles.selectedIngredient
-                      : styles.ingredientItem
-                  }
-                  onClick={() => handleIngredientSelect(ingredient)}
-                >
-                  {ingredient}
-                </p>
-              ))}
+              {["Chilli", "Hvidløg", "Rød peber", "Kebab"].map(
+                (ingredient, index) => (
+                  <p
+                    key={index}
+                    className={
+                      selectedIngredients.includes(ingredient)
+                        ? styles.selectedIngredient
+                        : styles.ingredientItem
+                    }
+                    onClick={() => handleIngredientSelect(ingredient)}
+                  >
+                    {ingredient}
+                  </p>
+                )
+              )}
             </div>
           )}
+
           <div className={styles.selectedIngredientsList}>
             {selectedIngredients.length > 0 && <h3>Valgte ingredienser:</h3>}
             {selectedIngredients.map((ingredient, index) => (
-              <p key={index} className={styles.selectedIngredientItem}>{ingredient}</p>
+              <p key={index} className={styles.selectedIngredientItem}>
+                {ingredient}
+              </p>
             ))}
           </div>
         </div>
@@ -99,7 +108,9 @@ const DishDetail = () => {
       </div>
 
       <p className={styles.price}>
-        Pris: {selectedSize === "Almindelig" ? dish.price.normal : dish.price.family},-
+        Pris:{" "}
+        {selectedSize === "Almindelig" ? dish.price.normal : dish.price.family}
+        ,-
       </p>
 
       <button onClick={addToCart} className={styles.addToCartButton}>
