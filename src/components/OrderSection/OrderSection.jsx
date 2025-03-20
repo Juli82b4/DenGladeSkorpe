@@ -36,6 +36,13 @@ const OrderSection = () => {
     updateCart(updatedCart); // Update cart state and localStorage
   };
 
+  // Function to remove an item completely from the cart
+  const removeItem = (index) => {
+    const updatedCart = [...cart];
+    updatedCart.splice(index, 1); // Remove the item at the given index
+    updateCart(updatedCart); // Update cart state and localStorage
+  };
+
   // Calculate the total price of all items in the cart
   const total = cart.reduce((acc, item) => acc + item.count * item.price, 0); // Sum of count * price for each item
 
@@ -45,15 +52,11 @@ const OrderSection = () => {
       {cart.map((item, index) => (
         <div key={index} className={styles.cartItem}>
           <div className={styles.cartItemHeader}>
-            {" "}
-            {/* First line */}
             <span className={styles.itemQuantity}>{item.count} X</span>
-            <img src={item.image} className={styles.itemImage} />
+            <img src={item.image} className={styles.itemImage} alt={item.title} />
             <p className={styles.title}>{item.title}</p>
           </div>
           <div className={styles.cartItemDetails}>
-            {" "}
-            {/* Second line */}
             <div className={styles.extraIngredients}>
               <p>
                 Ekstra{" "}
@@ -68,6 +71,9 @@ const OrderSection = () => {
             <div className={styles.totalPrice}>
               <p>Pris: {item.count * item.price},-</p>
             </div>
+            <button className={styles.deleteButton} onClick={() => removeItem(index)}>
+               X Slet
+            </button>
           </div>
         </div>
       ))}
@@ -82,11 +88,7 @@ const OrderSection = () => {
 
       {/* Checkout section */}
       <div className={styles.checkoutSection}>
-        <input
-          type="email"
-          placeholder="Din email"
-          className={styles.emailInput}
-        />
+        <input type="email" placeholder="Din email" className={styles.emailInput} />
         <br />
         <button
           onClick={() => alert("Checkout button clicked!")}
