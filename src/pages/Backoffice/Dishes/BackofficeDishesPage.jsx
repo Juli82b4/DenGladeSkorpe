@@ -9,8 +9,9 @@ const BackofficeDishesPage = () => {
     category: "",
     price: { normal: 0, family: 0 },
     ingredients: [],
-    image: "",
+    image: null,
   });
+
   const [editDish, setEditDish] = useState({
     id: "",
     title: "",
@@ -22,21 +23,27 @@ const BackofficeDishesPage = () => {
 
   const handleNewDishSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      await addDish(newDish);
-      alert("Dish added successfully!");
+      await addDish(newDish); // Await the addDish call
+      alert("Dish added successfully!"); // Optional: Show a success message
+      setNewDish({
+        // Clear form after submission
+        title: "",
+        category: "",
+        price: { normal: 0, family: 0 },
+        ingredients: [],
+        image: null,
+      });
     } catch (error) {
       alert("Failed to add dish: " + error.message);
     }
   };
 
-  const handleEditDishSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await updateDish(editDish.id, editDish);
-      alert("Dish updated successfully!");
-    } catch (error) {
-      alert("Failed to update dish: " + error.message);
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setNewDish({ ...newDish, image: file });
     }
   };
 
@@ -81,6 +88,7 @@ const BackofficeDishesPage = () => {
           </tbody>
         </table>
       </div>
+
       <div
         style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}
       >
@@ -131,71 +139,12 @@ const BackofficeDishesPage = () => {
             required
           />
           <input
-            type="text"
-            placeholder="Image URL"
-            onChange={(e) => setNewDish({ ...newDish, image: e.target.value })}
+            type="file"
+            onChange={handleImageChange}
+            accept="image/*"
             required
           />
           <button type="submit">Add Dish</button>
-        </form>
-        <form onSubmit={handleEditDishSubmit} className={styles.form}>
-          <h2>Edit Dish</h2>
-          <input
-            type="text"
-            placeholder="Dish ID"
-            onChange={(e) => setEditDish({ ...editDish, id: e.target.value })}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Title"
-            onChange={(e) => setEditDish({ ...editDish, title: e.target.value })}
-          />
-          <input
-            type="text"
-            placeholder="Category"
-            onChange={(e) =>
-              setEditDish({ ...editDish, category: e.target.value })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Normal Price"
-            onChange={(e) =>
-              setEditDish({
-                ...editDish,
-                price: { ...editDish.price, normal: +e.target.value },
-              })
-            }
-          />
-          <input
-            type="number"
-            placeholder="Family Price"
-            onChange={(e) =>
-              setEditDish({
-                ...editDish,
-                price: { ...editDish.price, family: +e.target.value },
-              })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Ingredients (comma-separated)"
-            onChange={(e) =>
-              setEditDish({
-                ...editDish,
-                ingredients: e.target.value.split(","),
-              })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Image URL"
-            onChange={(e) =>
-              setEditDish({ ...editDish, image: e.target.value })
-            }
-          />
-          <button type="submit">Edit Dish</button>
         </form>
       </div>
     </div>
