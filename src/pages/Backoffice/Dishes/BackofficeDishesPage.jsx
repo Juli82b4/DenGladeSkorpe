@@ -3,7 +3,7 @@ import useDishes from "../../../hooks/useDishes";
 import styles from "./../backoffice.module.css";
 
 const BackofficeDishesPage = () => {
-  const { dishes, isLoading, fetchError } = useDishes();
+  const { dishes, isLoading, fetchError, addDish, updateDish } = useDishes();
   const [newDish, setNewDish] = useState({
     title: "",
     category: "",
@@ -23,11 +23,7 @@ const BackofficeDishesPage = () => {
   const handleNewDishSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:3042/dishes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newDish),
-      });
+      await addDish(newDish);
       alert("Dish added successfully!");
     } catch (error) {
       alert("Failed to add dish: " + error.message);
@@ -37,11 +33,7 @@ const BackofficeDishesPage = () => {
   const handleEditDishSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:3042/dish/${editDish.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editDish),
-      });
+      await updateDish(editDish.id, editDish);
       alert("Dish updated successfully!");
     } catch (error) {
       alert("Failed to update dish: " + error.message);
