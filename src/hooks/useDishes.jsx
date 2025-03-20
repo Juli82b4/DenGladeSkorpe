@@ -2,15 +2,17 @@ import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 const useDishes = () => {
-  const [dishes, setDishes] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [fetchError, setFetchError] = useState(null);
-  const { token } = useContext(AuthContext);
+  const [dishes, setDishes] = useState([]); // State to store dishes
+  const [isLoading, setIsLoading] = useState(true); // State to track loading status
+  const [fetchError, setFetchError] = useState(null); // State to store errors
+  const { token } = useContext(AuthContext); // Get the authentication token from context
 
+  // Fetch all dishes on initial render
   useEffect(() => {
     const fetchDishesFromServer = async () => {
       try {
         const response = await fetch("http://localhost:3042/dishes");
+
         if (!response.ok) {
           throw new Error("Failed to fetch dishes");
         }
@@ -25,8 +27,9 @@ const useDishes = () => {
     };
 
     fetchDishesFromServer();
-  }, []);
+  }, []); // Empty dependency array makes sure this runs only once after mount
 
+  // Fetch a specific dish by its ID
   const getDishById = async (id) => {
     try {
       const response = await fetch(`http://localhost:3042/dish/${id}`);
@@ -41,31 +44,28 @@ const useDishes = () => {
     }
   };
 
+  // Add a new dish
   const addDish = async (newDish) => {
     try {
       const formData = new FormData();
-
       formData.append("title", newDish.title);
       formData.append("category", newDish.category);
 
-      // Correctly append the stringified price
+      // Correctly handle price, ensuring it’s a stringified value
       const priceString = JSON.stringify(newDish.price);
-      formData.append("price", priceString); // Append stringified price
+      formData.append("price", priceString);
 
       formData.append("ingredients", newDish.ingredients.join(","));
 
-      // Append the image file properly
-      if (newDish.image) {
-        formData.append("image", newDish.image); // Ensure this is the actual file
+      // If there's an image, append it to the formData
+      if (newDish.file) {
+        formData.append("file", newDish.file);
       }
-
-      // Log to check if 'price' is correctly appended
-      console.log("FormData Price:", formData.get("price"));
 
       const response = await fetch("http://localhost:3042/dish", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${token}`, // Attach token for authentication
+          Authorization: `Bearer ${token}`, // Attach the token for authentication
         },
         body: formData,
       });
@@ -74,29 +74,68 @@ const useDishes = () => {
         throw new Error("Failed to add dish");
       }
 
-      return await response.json();
+      // Returning the response data
+      const result = await response.json();
+      return result;
     } catch (error) {
       throw new Error(error.message);
     }
   };
 
+  // Update an existing dish
   const updateDish = async (id, updatedDish) => {
     try {
-      const response = await fetch(`http://localhost:3042/dish`, {
+      const response = await fetch(`http://localhost:3042/dish/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Attach token for authentication
+        },
         body: JSON.stringify(updatedDish),
       });
+
       if (!response.ok) {
         throw new Error("Failed to update dish");
       }
-      return await response.json();
+
+      const result = await response.json();
+      return result;
     } catch (error) {
       throw new Error(error.message);
     }
   };
 
-  return { dishes, isLoading, fetchError, getDishById, addDish, updateDish };
+  // Delete a dish by its ID
+  const deleteDish = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3042/dish/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`, // Attach the token for authentication
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete dish");
+      }
+
+      // Remove the deleted dish from the state
+      setDishes((prevDishes) => prevDishes.filter((dish) => dish._id !== id));
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  // Return the relevant state and functions to be used by components
+  return {
+    dishes,
+    isLoading,
+    fetchError,
+    getDishById,
+    addDish,
+    updateDish,
+    deleteDish,
+  };
 };
 
 export default useDishes;

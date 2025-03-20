@@ -9,7 +9,7 @@ const BackofficeDishesPage = () => {
     category: "",
     price: { normal: 0, family: 0 },
     ingredients: [],
-    image: null,
+    file: null,
   });
 
   const [editDish, setEditDish] = useState({
@@ -18,7 +18,7 @@ const BackofficeDishesPage = () => {
     category: "",
     price: { normal: 0, family: 0 },
     ingredients: [],
-    image: "",
+    file: "",
   });
 
   const handleNewDishSubmit = async (e) => {
@@ -33,7 +33,7 @@ const BackofficeDishesPage = () => {
         category: "",
         price: { normal: 0, family: 0 },
         ingredients: [],
-        image: null,
+        file: null,
       });
     } catch (error) {
       alert("Failed to add dish: " + error.message);
@@ -43,7 +43,7 @@ const BackofficeDishesPage = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setNewDish({ ...newDish, image: file });
+      setNewDish({ ...newDish, file: file });
     }
   };
 
