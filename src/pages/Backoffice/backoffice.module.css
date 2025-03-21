@@ -1,5 +1,5 @@
 .backofficePage {
-  padding: 2rem;
+  padding: 4rem;
 }
 
 .dishImage {
@@ -73,4 +73,62 @@
 
 .form button:hover {
   opacity: 0.8;
+}
+
+
+.orderTable {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.orderTable th,
+.orderTable td {
+  border: 1px solid #ddd; /* Add borders to table cells */
+  padding: 8px;
+  text-align: left;
+}
+
+.orderTable th {
+  background-color: #f4f4f4; /* Light gray background for header */
+  font-weight: bold;
+}
+
+.orderTable tr:nth-child(even) {
+  background-color: #f9f9f9; /* Alternate row background color */
+}
+
+.orderTable tr:hover {
+  background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+.actionButtons {
+  display: flex;
+  gap: 10px;
+}
+
+.receivedButton {
+  background-color: #4caf50; /* Green button */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.receivedButton:hover {
+  background-color: #45a049;
+}
+
+.deleteButton {
+  background-color: #f44336; 
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
 }

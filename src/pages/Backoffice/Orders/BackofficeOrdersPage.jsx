@@ -6,20 +6,26 @@ const BackofficeOrdersPage = () => {
   const { orders, isLoading, fetchError, updateOrderStatus, deleteOrder } = useOrders();
 
   // Handle order status update
-const handleStatusChange = async (orderId, newStatus) => {
-  try {
-    await updateOrderStatus(orderId, newStatus);
-    await fetchOrders(); 
-    alert("Order status updated successfully!");
-  } catch (error) {
-    alert("Failed to update order status: " + error.message);
-  }
-};
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      await updateOrderStatus(orderId, newStatus);
 
+      // Update orders in UI instantly
+      orders.forEach((order) => {
+        if (order._id === orderId) {
+          order.shipped = newStatus === "shipped";
+        }
+      });
+
+      alert("Order status updated successfully!");
+    } catch (error) {
+      alert("Failed to update order status: " + error.message);
+    }
+  };
 
   // Handle marking order as received
   const handleReceivedOrder = async (orderId) => {
-    await handleStatusChange(orderId, "received");
+    await handleStatusChange(orderId, "shipped");
   };
 
   // Handle deleting an order
@@ -60,7 +66,7 @@ const handleStatusChange = async (orderId, newStatus) => {
                 <td>
                   {order.dishes.map((dish, index) => (
                     <div key={index}>
-                      {dish.dishTitle} ({dish.amount}x)
+                     {dish.title} ({dish.amount}x)
                     </div>
                   ))}
                 </td>
@@ -68,10 +74,11 @@ const handleStatusChange = async (orderId, newStatus) => {
                 <td>{order.totalPrice},-</td>
                 <td>
                   <select
-                    value={order.status}
-                    onChange={(e) => handleStatusChange(order.id, e.target.value)}
+                    value={order.shipped ? "shipped" : "pending"}
+                    onChange={(e) => handleStatusChange(order._id, e.target.value)}
                   >
                     <option value="pending">Pending</option>
+                    <option value="shipped">Shipped</option>
                     <option value="processing">Processing</option>
                     <option value="completed">Completed</option>
                     <option value="received">Received</option>
@@ -82,13 +89,13 @@ const handleStatusChange = async (orderId, newStatus) => {
                   <div className={styles.actionButtons}>
                     <button
                       className={styles.receivedButton}
-                      onClick={() => handleReceivedOrder(order.id)}
+                      onClick={() => handleReceivedOrder(order._id)}
                     >
                       Received
                     </button>
                     <button
                       className={styles.deleteButton}
-                      onClick={() => handleDeleteOrder(order.id)}
+                      onClick={() => handleDeleteOrder(order._id)}
                     >
                       Delete
                     </button>

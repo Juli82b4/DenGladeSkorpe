@@ -25,7 +25,7 @@ const BackofficeDishesPage = () => {
   const handleNewDishSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDish(newDish); // Await the addDish call
+      await addDish(newDish); 
       alert("Dish added successfully!");
       setNewDish({
         title: "",
@@ -42,7 +42,7 @@ const BackofficeDishesPage = () => {
   const handleEditDishSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateDish(editDish.id, editDish); // Await the updateDish call
+      await updateDish(editDish.id, editDish);
       alert("Dish updated successfully!");
       setEditDish({
         id: "",
@@ -78,14 +78,14 @@ const BackofficeDishesPage = () => {
       category: dish.category,
       price: dish.price,
       ingredients: dish.ingredients,
-      file: dish.image, // Assuming image is stored in `image`
+      file: dish.image, 
     });
   };
 
   const handleDeleteDish = async (id) => {
     if (window.confirm("Are you sure you want to delete this dish?")) {
       try {
-        await deleteDish(id); // Call the deleteDish function from useDishes
+        await deleteDish(id); 
         alert("Dish deleted successfully!");
       } catch (error) {
         alert("Failed to delete dish: " + error.message);
