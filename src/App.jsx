@@ -13,6 +13,7 @@ import Login from "./components/login/Login";
 import { useAuthContext } from "./context/useAuthContext";
 import BackofficeDishesPage from "./pages/Backoffice/Dishes/BackofficeDishesPage";
 import BackofficeOrdersPage from "./pages/Backoffice/Orders/BackofficeOrdersPage";
+import BackofficeEmployeesPage from "./pages/Backoffice/Employees/BackofficeEmployeePage";
 
 function App() {
   const { signedIn } = useAuthContext();
@@ -31,6 +32,7 @@ function App() {
       element: (
         <ProtectedRoute isAllowed={signedIn}>
           <BackofficeDishesPage />
+          <BackofficeEmployeesPage />
           <BackofficeOrdersPage />
         </ProtectedRoute>
       ),
