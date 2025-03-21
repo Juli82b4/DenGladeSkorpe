@@ -3,98 +3,83 @@ import useOrders from "../../hooks/useOrders";
 import styles from "./ordersection.module.css";
 
 const OrderSection = () => {
-  const [cart, setCart] = useState([]); 
-  const [comment, setComment] = useState(""); 
-  const { submitOrder, fetchError } = useOrders(); 
-  // Load the cart data from localStorage when the component mounts
+  const [cart, setCart] = useState([]); // State to store cart items
+  const [comment, setComment] = useState(""); // State to store user comments
+  const { submitOrder, fetchError } = useOrders(); // Custom hook for order submission
+
+  // Load cart from localStorage when the component mounts
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || []; 
-    setCart(storedCart); 
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCart(storedCart);
   }, []);
 
   // Calculate the total price of all items in the cart
-  const total = cart.reduce((acc, item) => acc + item.count * item.price, 0); 
+  const total = cart.reduce(
+    (sum, item) => sum + (item.count || 0) * (item.price || 0),
+    0
+  );
 
-  // Function to handle the order submission
+  // Remove an item from the cart by index
+  const removeItem = (index) => {
+    const updatedCart = cart.filter((_, i) => i !== index); // Filter out the item
+    setCart(updatedCart); // Update state
+    localStorage.setItem("cart", JSON.stringify(updatedCart)); // Update localStorage
+  };
+
+  // Submit the order with cart, comment, and total
   const handleOrderSubmit = async () => {
     try {
-      // Ensure the comment is passed here when calling submitOrder
-      const result = await submitOrder(cart, comment, total);
+      await submitOrder(cart, comment, total); // Call the submitOrder function
       alert("Order successfully submitted!");
-
-      // Optionally, clear the cart after submitting the order
-      localStorage.removeItem("cart");
-      setCart([]);
+      localStorage.removeItem("cart"); // Clear cart from localStorage
+      setCart([]); // Clear cart state
     } catch (error) {
-      alert(`Error: ${error.message}`);
+      alert(`Error: ${error.message}`); // Show error message
     }
   };
 
   return (
     <div className={styles.orderSection}>
-      {/* Loop through the cart items and display them */}
+      {/* Render each item in the cart */}
       {cart.map((item, index) => (
         <div key={index} className={styles.cartItem}>
           <div className={styles.cartItemHeader}>
-            <span className={styles.itemQuantity}>{item.count} X</span>
-            <img
-              src={item.image}
-              className={styles.itemImage}
-              alt={item.title}
-            />
-            <p className={styles.title}>{item.title}</p>
+            <span>{item.count} X</span>
+            <img src={item.image} alt={item.title} className={styles.itemImage} />
+            <p>{item.title}</p>
           </div>
           <div className={styles.cartItemDetails}>
-            <div className={styles.extraIngredients}>
-              <p>
-                Ekstra{" "}
-                {": " +
-                  item.ingredients.map((ingredient) => ingredient).join(", ") ||
-                  "Ingen"}
-              </p>
-            </div>
-            <div className={styles.size}>
-              <p>Størrelse: {item.size || "Standard"}</p>
-            </div>
-            <div className={styles.totalPrice}>
-              <p>Pris: {item.count * item.price},-</p>
-            </div>
-            <button
-              className={styles.deleteButton}
-              onClick={() => removeItem(index)}
-            >
+            <p>Ekstra: {item.ingredients?.join(", ") || "Ingen"}</p>
+            <p>Størrelse: {item.size || "Standard"}</p>
+            <p>Pris: {item.count * item.price},-</p>
+            <button onClick={() => removeItem(index)} className={styles.deleteButton}>
               X Slet
             </button>
           </div>
         </div>
       ))}
 
-      {/* Display total price */}
+      {/* Display the total price */}
       <div className={styles.totalBox}>
         <h2>
-          <span>I alt: </span>
-          {total.toFixed(2)},-
+          I alt: {total.toFixed(2)},-
         </h2>
       </div>
 
-      {/* Comment Section */}
-      <div className={styles.commentSection}>
-        <textarea
-          className={styles.commentInput}
-          placeholder="Skriv en kommentar til din ordre (valgfrit)"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)} 
-        />
-      </div>
+      {/* Textarea for user to add a comment */}
+      <textarea
+        className={styles.commentInput}
+        placeholder="Skriv en kommentar til din ordre (valgfrit)"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      />
 
-      {/* Checkout section */}
-      <div className={styles.checkoutSection}>
-        <button onClick={handleOrderSubmit} className={styles.checkoutButton}>
-          Afgiv ordre
-        </button>
-      </div>
+      {/* Button to submit the order */}
+      <button onClick={handleOrderSubmit} className={styles.checkoutButton}>
+        Afgiv ordre
+      </button>
 
-      {/* Display any fetch error */}
+      {/* Display any error from the order submission */}
       {fetchError && <div className={styles.error}>{fetchError}</div>}
     </div>
   );

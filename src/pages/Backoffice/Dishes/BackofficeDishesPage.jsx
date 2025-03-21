@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import useDishes from "../../../hooks/useDishes";
-import styles from "./../backoffice.module.css";
+import useDishes from "../../../hooks/useDishes"; // Custom hook to fetch and manage dishes
+import styles from "./../backoffice.module.css"; // Import styles
 
 const BackofficeDishesPage = () => {
+  // States for new and editing dishes
   const { dishes, isLoading, fetchError, addDish, updateDish, deleteDish } =
     useDishes();
   const [newDish, setNewDish] = useState({
@@ -22,10 +23,11 @@ const BackofficeDishesPage = () => {
     file: "",
   });
 
+  // Handle form submission for adding a new dish
   const handleNewDishSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDish(newDish); 
+      await addDish(newDish); // Call the addDish function from the custom hook
       alert("Dish added successfully!");
       setNewDish({
         title: "",
@@ -35,14 +37,15 @@ const BackofficeDishesPage = () => {
         file: null,
       });
     } catch (error) {
-      alert("Failed to add dish: " + error.message);
+      alert("Failed to add dish: " + error.message); // Error handling
     }
   };
 
+  // Handle form submission for updating an existing dish
   const handleEditDishSubmit = async (e) => {
     e.preventDefault();
     try {
-      await updateDish(editDish.id, editDish);
+      await updateDish(editDish.id, editDish); // Call the updateDish function
       alert("Dish updated successfully!");
       setEditDish({
         id: "",
@@ -53,10 +56,11 @@ const BackofficeDishesPage = () => {
         file: "",
       });
     } catch (error) {
-      alert("Failed to update dish: " + error.message);
+      alert("Failed to update dish: " + error.message); // Error handling
     }
   };
 
+  // Handle image file change for new dish
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -64,6 +68,7 @@ const BackofficeDishesPage = () => {
     }
   };
 
+  // Handle image file change for editing dish
   const handleEditImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -71,6 +76,7 @@ const BackofficeDishesPage = () => {
     }
   };
 
+  // Fill the edit form when clicking edit button
   const handleEditClick = (dish) => {
     setEditDish({
       id: dish._id,
@@ -78,17 +84,18 @@ const BackofficeDishesPage = () => {
       category: dish.category,
       price: dish.price,
       ingredients: dish.ingredients,
-      file: dish.image, 
+      file: dish.image,
     });
   };
 
+  // Handle deleting a dish
   const handleDeleteDish = async (id) => {
     if (window.confirm("Are you sure you want to delete this dish?")) {
       try {
-        await deleteDish(id); 
+        await deleteDish(id); // Call the deleteDish function
         alert("Dish deleted successfully!");
       } catch (error) {
-        alert("Failed to delete dish: " + error.message);
+        alert("Failed to delete dish: " + error.message); // Error handling
       }
     }
   };
@@ -96,8 +103,10 @@ const BackofficeDishesPage = () => {
   return (
     <div className={styles.backofficePage}>
       <h1>Backoffice Dishes</h1>
-      {isLoading && <p>Loading...</p>}
-      {fetchError && <p>Error: {fetchError}</p>}
+      {isLoading && <p>Loading...</p>} {/* Display loading status */}
+      {fetchError && <p>Error: {fetchError}</p>} {/* Display error message */}
+
+      {/* Dish List Table */}
       <div>
         <h2>Dish List</h2>
         <table className={styles.dishTable}>
@@ -124,6 +133,7 @@ const BackofficeDishesPage = () => {
                 <td>{dish.price.family},-</td>
                 <td>{dish.category}</td>
                 <td>
+                  {/* Edit and Delete buttons */}
                   <div className={styles.actionButtons}>
                     <button
                       className={styles.editButton}
