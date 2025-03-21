@@ -5,8 +5,7 @@ const useOrders = () => {
   const [orders, setOrders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
-  const { token } = useContext(AuthContext); // Get the authentication token from context
-
+  const { token } = useContext(AuthContext); 
   // Fetch orders on component mount
   useEffect(() => {
     const fetchOrders = async () => {
@@ -49,7 +48,7 @@ const useOrders = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach the token for authentication
+          Authorization: `Bearer ${token}`, 
         },
         body: JSON.stringify({ status: newStatus }),
       });
@@ -71,13 +70,13 @@ const useOrders = () => {
   const submitOrder = async (cart, comment, total) => {
     const orderData = {
       dishes: cart.map((item) => ({
-        dish: item._id, // Assuming `id` is the unique identifier for the dish
+        dish: item._id, 
         amount: item.count,
-        size: item.size || "normal", // Default to 'normal' if size is not specified
-        extraIngredients: item.ingredients || [], // Ensure we send an empty array if no ingredients
+        size: item.size || "normal",
+        extraIngredients: item.ingredients || [], 
       })),
-      comment, // Pass the comment here
-      totalPrice: total, // Calculate total price
+      comment, 
+      totalPrice: total, 
     };
 
     try {
@@ -85,14 +84,14 @@ const useOrders = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Attach the token for authentication
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(orderData),
       });
 
-      console.log(orderData.dishes); // Log the status code
+      console.log(orderData.dishes); 
       const result = await response.json();
-      console.log("Response data:", result); // Log the response data
+      console.log("Response data:", result); 
 
       if (!response.ok) {
         throw new Error(
@@ -102,7 +101,7 @@ const useOrders = () => {
 
       return result;
     } catch (error) {
-      console.error("Error while submitting order:", error); // Log the error details
+      console.error("Error while submitting order:", error);
       throw new Error(error.message);
     }
   };

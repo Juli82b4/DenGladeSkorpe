@@ -6,14 +6,16 @@ const BackofficeOrdersPage = () => {
   const { orders, isLoading, fetchError, updateOrderStatus, deleteOrder } = useOrders();
 
   // Handle order status update
-  const handleStatusChange = async (orderId, newStatus) => {
-    try {
-      await updateOrderStatus(orderId, newStatus);
-      alert("Order status updated successfully!");
-    } catch (error) {
-      alert("Failed to update order status: " + error.message);
-    }
-  };
+const handleStatusChange = async (orderId, newStatus) => {
+  try {
+    await updateOrderStatus(orderId, newStatus);
+    await fetchOrders(); 
+    alert("Order status updated successfully!");
+  } catch (error) {
+    alert("Failed to update order status: " + error.message);
+  }
+};
+
 
   // Handle marking order as received
   const handleReceivedOrder = async (orderId) => {
@@ -53,8 +55,8 @@ const BackofficeOrdersPage = () => {
           </thead>
           <tbody>
             {orders.map((order) => (
-              <tr key={order.id}>
-                <td>{order.id}</td>
+              <tr key={order._id}>
+                <td>{order._id}</td>
                 <td>
                   {order.dishes.map((dish, index) => (
                     <div key={index}>

@@ -3,18 +3,17 @@ import useOrders from "../../hooks/useOrders";
 import styles from "./ordersection.module.css";
 
 const OrderSection = () => {
-  const [cart, setCart] = useState([]); // State to store the cart items
-  const [comment, setComment] = useState(""); // State for the comment input
-  const { submitOrder, fetchError } = useOrders(); // Destructure `submitOrder` from the hook
-
+  const [cart, setCart] = useState([]); 
+  const [comment, setComment] = useState(""); 
+  const { submitOrder, fetchError } = useOrders(); 
   // Load the cart data from localStorage when the component mounts
   useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem("cart")) || []; // Get cart from localStorage or empty array
-    setCart(storedCart); // Set the cart state
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || []; 
+    setCart(storedCart); 
   }, []);
 
   // Calculate the total price of all items in the cart
-  const total = cart.reduce((acc, item) => acc + item.count * item.price, 0); // Sum of count * price for each item
+  const total = cart.reduce((acc, item) => acc + item.count * item.price, 0); 
 
   // Function to handle the order submission
   const handleOrderSubmit = async () => {
@@ -84,7 +83,7 @@ const OrderSection = () => {
           className={styles.commentInput}
           placeholder="Skriv en kommentar til din ordre (valgfrit)"
           value={comment}
-          onChange={(e) => setComment(e.target.value)} // Update comment state on input change
+          onChange={(e) => setComment(e.target.value)} 
         />
       </div>
 
